@@ -6,7 +6,7 @@ trigger:
 - master
 
 variables:
-  tag: '$(Build.BuildId)''
+  tag: '$(Build.BuildId)'
 
 # Pipeline Hierarchial Flow: Stages -> Stage -> Jobs -> Job -> Steps -> Task1, Task2, Task3  
 stages:
@@ -24,7 +24,7 @@ stages:
         containerRegistry: manual-aksdevopsacr-svc
         repository: custom2aksnginxapp1
         command: buildAndPush
-        Dockerfile: **/Dockerfile
+        Dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
           $(Build.SourceVersion)
@@ -35,7 +35,7 @@ stages:
     - task: CopyFiles@2
       inputs:
         SourceFolder: $(System.DefaultWorkingDirectory)/kube-manifests
-        Contents: **
+        Contents: '**'
         TargetFolder: $(Build.ArtifactStagingDirectory)
         OverWrite: true
     # List files from Build Artifact Staging Directory - After Copy
@@ -44,6 +44,6 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: $(Build.ArtifactStagingDirectory)
-        ArtifactName: drop
+        ArtifactName: 'drop'
         publishLocation: Container
 
